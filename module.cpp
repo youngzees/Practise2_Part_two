@@ -1,8 +1,9 @@
 #include "module.hpp"
 #include <cmath> 
 #include <iostream> 
+#include <cstdint>
 
-bool isPrime(int n) {
+bool isPrime(int64_t n) {
 // Числа меньше или равные 1 — не простые
     if (n <= 1) return false;
 // 2 и 3 — простые
@@ -11,7 +12,7 @@ bool isPrime(int n) {
     if (n % 2 == 0 || n % 3 == 0) return false;
     
     // Перебираем делители до корня из n
-    for (int i = 5; i * i <= n; i += 6) { // Все простые числа имеют вид 6k ± 1, поэтому шаг 6
+    for (int64_t i = 5; i * i <= n; i += 6) { // Все простые числа имеют вид 6k ± 1, поэтому шаг 6
         if (n % i == 0 || n % (i + 2) == 0) return false;
     }
     
@@ -19,7 +20,7 @@ bool isPrime(int n) {
 }
 
 // Проверка теоремы Ферма
-bool checkFerma(int a, int p) {
+bool checkFerma(int64_t a, int64_t p) {
     //только для простого p
     if (!isPrime(p)) {
         std::cout << "Модуль p = " << p << " не простой. Теорема Ферма не работает.\n";

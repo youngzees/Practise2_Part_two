@@ -1,16 +1,17 @@
 #ifndef stepen_hpp
 #define stepen_hpp
 
-//dычисляет a^x mod p
-long long fastBinStep(long long a, long long x, long long p);
+#include <cstdint>
+//вычисляет a^x mod p
+int64_t fastBinStep(int64_t a, int64_t x, int64_t p);
 
 //возведение в степень через теорему Ферма
 //сначала упрощает степень, затем вызывает fastBinStep
-long long fermaStep(long long a, long long x, long long p);
+int64_t fermaStep(int64_t a, int64_t x, int64_t p);
 
 //основная функция выбора алгоритма
 //если useFerma = true и p простое — использует fermaStep
 //иначе — fastBinStep
-long long calcStep(long long a, long long x, long long p, bool useFerma = true);
+int64_t calcStep(int64_t a, int64_t x, int64_t p, bool useFerma = true);
 
 #endif

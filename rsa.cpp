@@ -2,13 +2,14 @@
 #include "evklid.hpp"
 #include "stepen.hpp"
 #include <iostream>
+#include <cstdint>
 
-void generateKeys(RSAKey &key, long long p, long long q) {
+void generateKeys(RSAKey &key, int64_t p, int64_t q) {
 //модуль n = p * q
     key.n = p * q;
     
 //функция Эйлера
-    long long phi = (p - 1) * (q - 1);
+    int64_t phi = (p - 1) * (q - 1);
     
     //открытая экспонента
     key.e = 65537;
@@ -21,29 +22,29 @@ void generateKeys(RSAKey &key, long long p, long long q) {
 }
 
 //шифрование одного символа
-long long encryptChar(long long m, long long e, long long n) {
+int64_t encryptChar(int64_t m, int64_t e, int64_t n) {
 //вычисляем m^e mod n
     return fastBinStep(m, e, n);
 }
 
 //расшифрование одного символа
-long long decryptChar(long long c, long long d, long long n) {
+int64_t decryptChar(int64_t c, int64_t d, int64_t n) {
     //вычисляем c^d mod n
     return fastBinStep(c, d, n);
 }
 
 //шифрование строки
-std::vector<long long> encryptString(std::string text, long long e, long long n) {
-    std::vector<long long> result;
+std::vector<int64_t> encryptString(std::string text, int64_t e, int64_t n) {
+    std::vector<int64_t> result;
     std::cout << "\nШифрование:\n";
     
     //проходим по каждому символу
     for (char ch : text) {
     //превращаем символ в число (его код)
-        long long code = (long long)ch;
+        int64_t code = (int64_t)ch;
         
     //шифруем: encrypted = code^e mod n
-        long long encrypted = encryptChar(code, e, n);
+        int64_t encrypted = encryptChar(code, e, n);
         
     //добавляем в результат
         result.push_back(encrypted);
@@ -56,14 +57,14 @@ std::vector<long long> encryptString(std::string text, long long e, long long n)
 }
 
 //расшифрование строки
-std::string decryptString(std::vector<long long> cipher, long long d, long long n) {
+std::string decryptString(std::vector<int64_t> cipher, int64_t d, int64_t n) {
     std::string result;
     std::cout << "\nРасшифрование:\n";
     
     //проходим по каждому зашифрованному числу
-    for (long long c : cipher) {
+    for (int64_t c : cipher) {
         //расшифровываем: decrypted = c^d mod n
-        long long decrypted = decryptChar(c, d, n);
+        int64_t decrypted = decryptChar(c, d, n);
         
         //превращаем число обратно в символ
         result.push_back((char)decrypted);

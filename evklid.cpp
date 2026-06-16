@@ -1,8 +1,9 @@
 #include "evklid.hpp"
 #include <iostream>
+#include <cstdint>
 
 //расширенный алгоритм Евклида (рекурсивный)
-long long extendedGcd(long long c, long long m, long long &u, long long &v) {
+int64_t extendedGcd(int64_t c, int64_t m, int64_t &u, int64_t &v) {
 //если m = 0, то НОД(c, 0) = c
 // c * 1 + 0 * 0 = c, поэтому u = 1, v = 0
     if (m == 0) {
@@ -12,8 +13,8 @@ long long extendedGcd(long long c, long long m, long long &u, long long &v) {
     }
     
     //рекурсивно вызываем с
-    long long u1, v1;
-    long long gcd = extendedGcd(m, c % m, u1, v1);
+    int64_t u1, v1;
+    int64_t gcd = extendedGcd(m, c % m, u1, v1);
     
 //формулы обратного хода:
     u = v1;
@@ -23,7 +24,7 @@ long long extendedGcd(long long c, long long m, long long &u, long long &v) {
 }
 
 //находит обратное число с выводом u и v
-long long findReverse(long long c, long long m, long long &u, long long &v) {
+int64_t findReverse(int64_t c, int64_t m, int64_t &u, int64_t &v) {
     std::cout << "Поиск d: " << c << " * d ≡ 1 (mod " << m << ")\n";
     
     //проверка, что модуль положительный
@@ -42,7 +43,7 @@ long long findReverse(long long c, long long m, long long &u, long long &v) {
         return -1;
     }
     
-    long long gcd = extendedGcd(c, m, u, v);
+    int64_t gcd = extendedGcd(c, m, u, v);
     
     //вывод u и v 
     std::cout << "НОД(" << c << ", " << m << ") = " << gcd << "\n";
@@ -56,14 +57,14 @@ long long findReverse(long long c, long long m, long long &u, long long &v) {
     }
     
     //приводим u к положительному остатку — это и есть d
-    long long d = (u % m + m) % m;
+    int64_t d = (u % m + m) % m;
     std::cout << "d = u mod m = " << u << " mod " << m << " = " << d << "\n";
     
     return d;
 }
 
 //обратное число без вывода u и v
-long long modInverse(long long c, long long m) {
+int64_t modInverse(int64_t c, int64_t m) {
     //проверка, что модуль положительный
     if (m <= 0) return -1;
     
@@ -74,8 +75,8 @@ long long modInverse(long long c, long long m) {
     if (c == 0) return -1;
     
     //вызываем расширенный алгоритм Евклида
-    long long u, v;
-    long long gcd = extendedGcd(c, m, u, v);
+    int64_t u, v;
+    int64_t gcd = extendedGcd(c, m, u, v);
     
     //если НОД не равен 1, обратного числа нет
     if (gcd != 1) return -1;

@@ -3,26 +3,27 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
 
 struct RSAKey {
-    long long n;    //модуль (p * q)
-    long long e;    //открытая экспонента (для шифрования)
-    long long d;    //закрытая экспонента (для расшифрования)
+    int64_t n;    //модуль (p * q)
+    int64_t e;    //открытая экспонента (для шифрования)
+    int64_t d;    //закрытая экспонента (для расшифрования)
 };
 
 //генерация ключей на основе простых чисел p и q
-void generateKeys(RSAKey &key, long long p, long long q);
+void generateKeys(RSAKey &key, int64_t p, int64_t q);
 
 //шифрование одного символа: c = m^e mod n
-long long encryptChar(long long m, long long e, long long n);
+int64_t encryptChar(int64_t m, int64_t e, int64_t n);
 
 //расшифрование одного символа: m = c^d mod n
-long long decryptChar(long long c, long long d, long long n);
+int64_t decryptChar(int64_t c, int64_t d, int64_t n);
 
 //шифрование всей строки: каждый символ -> число -> зашифрованное число
-std::vector<long long> encryptString(std::string text, long long e, long long n);
+std::vector<int64_t> encryptString(std::string text, int64_t e, int64_t n);
 
 //расшифрование: каждое число -> расшифрованное число -> символ
-std::string decryptString(std::vector<long long> cipher, long long d, long long n);
+std::string decryptString(std::vector<int64_t> cipher, int64_t d, int64_t n);
 
 #endif

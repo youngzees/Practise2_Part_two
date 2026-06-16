@@ -2,10 +2,11 @@
 #include "module.hpp"
 #include <iostream>
 #include <vector>
+#include <cstdint>
 
 //двоичный метод
-long long fastBinStep(long long a, long long x, long long p) {
-    long long result = 1;   //начинаем с 1 (нейтральный элемент)
+int64_t fastBinStep(int64_t a, int64_t x, int64_t p) {
+    int64_t result = 1;   //начинаем с 1 (нейтральный элемент)
     a = a % p;  //приводим a к остатку по модулю p
     
     //пока есть биты в степени x
@@ -25,7 +26,7 @@ long long fastBinStep(long long a, long long x, long long p) {
 
 //возведение в степень через теорему Ферма
 //упрощает степень: x = x % (p-1), затем вызывает fastBinStep
-long long fermaStep(long long a, long long x, long long p) {
+int64_t fermaStep(int64_t a, int64_t x, int64_t p) {
     //если p не простое — теорема Ферма не работает
     if (!isPrime(p)) {
         return fastBinStep(a, x, p);
@@ -37,7 +38,7 @@ long long fermaStep(long long a, long long x, long long p) {
     }
     
     //упрощаем степень по теореме Ферма: a^(p-1) ≡ 1 (mod p)
-    long long newX = x % (p - 1);
+    int64_t newX = x % (p - 1);
     
     //если новая степень 0, значит x кратен (p-1), результат 1
     if (newX == 0) {
@@ -49,7 +50,7 @@ long long fermaStep(long long a, long long x, long long p) {
 }
 
 //основная функция выбора алгоритма
-long long calcStep(long long a, long long x, long long p, bool useFerma) {
+int64_t calcStep(int64_t a, int64_t x, int64_t p, bool useFerma) {
     //если useFerma = true и p простое — используем Ферма
     if (useFerma && isPrime(p)) {
         return fermaStep(a, x, p);
